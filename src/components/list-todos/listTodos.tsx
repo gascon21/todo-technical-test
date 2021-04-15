@@ -15,7 +15,9 @@ function ListTodos() {
         onCreateTodo(inputText);
     };
     const deleteCompletedTodo = () => {
-        // onCreateTodo(inputText);
+        const todosNotDeleted: Todo[] = todos.filter((todo) => !todo.completed);
+
+        setTodos(todosNotDeleted);
     };
     const onCreateTodo = (description: string) => {
         const newTodo: Todo = {description: description, id: `${description}-${todos.length+1}`, completed: false};
