@@ -1,11 +1,15 @@
 import React from 'react';
 import './customInput.scss'
-type Props = { onKeyDown: () => void; inputText: string }
+type Props = { inputText: string; setInputText: (text: string) => void }
 
-const CustomInput: React.FC<Props> = ({onKeyDown, inputText}) => {
+const CustomInput: React.FC<Props> = ({inputText, setInputText}) => {
 
-  return  <div onKeyDown={onKeyDown} className="custom-input">
-            <input/>
+  const onChange = (event: any) => {
+    setInputText(event.target.value);
+  };
+
+  return  <div className="custom-input">
+            <input type="text" value={inputText} className={"custom-input"} onChange={onChange} placeholder={"Nueva tarea"}/>
           </div>
 }
 
