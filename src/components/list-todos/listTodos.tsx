@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import './listTodos.scss'
 import CustomBtn from '../custom-btn/customBtn';
 import CustomInput from '../custom-input/customInput';
+import CustomCheckbox from '../custom-checkbox/customCheckbox';
 
-export type Todo = {id: string, description: string, done: boolean};
+export type Todo = {id: string, description: string, completed: boolean};
 
 function ListTodos() {
 
@@ -17,9 +18,23 @@ function ListTodos() {
         // onCreateTodo(inputText);
     };
     const onCreateTodo = (description: string) => {
-        const newTodo: Todo = {description: description, id: `${description}-${todos.length+1}`, done: false};
+        const newTodo: Todo = {description: description, id: `${description}-${todos.length+1}`, completed: false};
         setTodos([...todos, newTodo]);
         setInputText("");
+    }
+
+    const onCheck = (todoId: string) => {
+        const updateTodos: Todo[] = todos.map((todo) => {
+            if (todo.id === todoId) {
+                return {
+                    ...todo,
+                    completed: !todo.completed
+                }
+            }
+            return todo;
+        });
+
+        setTodos(updateTodos);
     }
     
     return  <div className="list-todos">
@@ -32,7 +47,7 @@ function ListTodos() {
                 <div className="list-todos__content">
                     {todos.map((todo) => (
                         <div className="list-todos__content--item" key={todo.id}>
-                            {todo.description}
+                            <CustomCheckbox todo={todo} onCheck={onCheck}></CustomCheckbox>
                         </div>
                     ))}
 
